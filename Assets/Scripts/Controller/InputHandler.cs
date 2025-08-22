@@ -21,6 +21,7 @@ public class InputHandler : MonoBehaviour
 
     public StatesManager statesManager;
     public CameraHandler camHolder;
+    public PlayerReferences p_references;
 
     private void Start()
     {
@@ -44,6 +45,11 @@ public class InputHandler : MonoBehaviour
         InGame_UpdateStates_FixedUpdate();
         statesManager.FixedTick(delta);
         camHolder.FixedTick(delta);
+
+        if (statesManager.rigid.velocity.sqrMagnitude > 0)
+            p_references.targetSpread.value = 45;
+        else
+            p_references.targetSpread.value = 15;
     }
 
     void GetInput_FixedUpdate()
@@ -65,6 +71,8 @@ public class InputHandler : MonoBehaviour
         statesManager.inp.moveDirection = moveDir;
 
         statesManager.inp.rotateDirection = camHolder.mTransform.forward;
+
+        
     }
     #endregion
 

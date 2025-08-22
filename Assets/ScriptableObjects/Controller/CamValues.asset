@@ -21,8 +21,8 @@ MonoBehaviour:
   maxAngle: 35
   normalZ: -3
   normalX: 0.4
-  aimZ: -1
-  aimX: 0.4
+  aimZ: -0.7
+  aimX: 0.6
   normalY: 1.437
   crouchY: 1
   adaptSpeed: 9

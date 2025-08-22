@@ -9,6 +9,7 @@ public class StatesManager : MonoBehaviour
     public ControllerStates states;
     public InputVariables inp;
     public WeaponManager weaponManager;
+    public Character character;
 
     [System.Serializable]
     public class InputVariables
@@ -82,6 +83,9 @@ public class StatesManager : MonoBehaviour
         a_hook = activeModel.GetComponent<AnimatorHook>();
         a_hook.Init(this);
         Init_WeaponManager();
+
+        character = GetComponent<Character>();
+        character.Init(this);
     }
 
     void SetupAnimator()

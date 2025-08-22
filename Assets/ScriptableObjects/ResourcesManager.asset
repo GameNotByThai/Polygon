@@ -16,3 +16,8 @@ MonoBehaviour:
   all_weapons:
   - {fileID: 11400000, guid: baad36e9fd9f0d14e9361885c780fcb0, type: 2}
   - {fileID: 11400000, guid: 3042e1a29a57a3749b4e02c3c2e55184, type: 2}
+  meshContainer:
+  - {fileID: 11400000, guid: e80288586dea66e408de1984ca4b545f, type: 2}
+  - {fileID: 11400000, guid: 841777ce10c8be0438efd83438cd1b14, type: 2}
+  charObjects: []
+  masks: []
