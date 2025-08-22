@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class StatesManager : MonoBehaviour
 {
+    public ResourcesManager resourcesManager;
     public ControllerStats stats;
     public ControllerStates states;
     public InputVariables inp;
+    public WeaponManager weaponManager;
 
     [System.Serializable]
     public class InputVariables
@@ -60,6 +62,7 @@ public class StatesManager : MonoBehaviour
     #region Init
     public void Init()
     {
+        resourcesManager.Init();
         mTransfrom = transform;
 
         SetupAnimator();
@@ -78,6 +81,7 @@ public class StatesManager : MonoBehaviour
 
         a_hook = activeModel.GetComponent<AnimatorHook>();
         a_hook.Init(this);
+        Init_WeaponManager();
     }
 
     void SetupAnimator()
@@ -239,6 +243,43 @@ public class StatesManager : MonoBehaviour
 
         anim.SetFloat(StaticStrings.horizontal, h, 0.2f, delta);
         anim.SetFloat(StaticStrings.vertical, v, 0.2f, delta);
+    }
+
+    #endregion
+
+    #region ManagerFunctions
+    public void Init_WeaponManager()
+    { 
+        CreateRuntimeWeapon(weaponManager.mainWeaponId, ref weaponManager.m_weapon);
+        EquipRuntimeWeapon(weaponManager.m_weapon);
+    }
+
+    public void CreateRuntimeWeapon(string id, ref RuntimeWeapon r_w_m)
+    {
+        Weapon w = resourcesManager.GetWeapon(id); 
+        RuntimeWeapon rw = resourcesManager.runtime.WeaponToRuntimeWeapon(w);
+
+        GameObject go = Instantiate(w.modelPrefabs);
+        rw.m_instance = go;
+        rw.w_actual = w;
+        rw.w_hook = go.GetComponent<WeaponHook>();
+        go.SetActive(false);
+
+        Transform p = anim.GetBoneTransform(HumanBodyBones.RightHand);
+        go.transform.parent = p;
+        go.transform.localPosition = Vector3.zero;
+        go.transform.localEulerAngles = Vector3.zero;
+        go.transform.localScale = Vector3.one;
+
+        r_w_m = rw;
+    }
+
+    public void EquipRuntimeWeapon(RuntimeWeapon rw)
+    {
+        rw.m_instance.SetActive(true);
+        a_hook.EquipWeapon(rw);
+        Debug.Log(rw.w_actual.weaponType);
+        anim.SetFloat(StaticStrings.weaponType, rw.w_actual.weaponType);
     }
 
     #endregion

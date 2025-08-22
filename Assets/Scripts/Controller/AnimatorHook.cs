@@ -18,8 +18,11 @@ public class AnimatorHook : MonoBehaviour
     Transform aimPivot;
     Vector3 lookDir;
 
+    public bool onIdleDisableOh;
     public bool disable_o_h;
     public bool disable_m_h;
+
+    RuntimeWeapon curWeapon;
 
     public void Init(StatesManager st)
     {
@@ -27,7 +30,6 @@ public class AnimatorHook : MonoBehaviour
         anim = statesManager.anim;
 
         shoulder = anim.GetBoneTransform(HumanBodyBones.RightShoulder).transform;
-        Debug.Log(shoulder.name + ": " + shoulder);
         aimPivot = new GameObject().transform;
         aimPivot.name = "AimPivot";
         aimPivot.transform.parent = statesManager.transform;
@@ -36,6 +38,17 @@ public class AnimatorHook : MonoBehaviour
         rh_target.parent = aimPivot;
         statesManager.inp.aimPosition = statesManager.transform.position + transform.forward * 15;
         statesManager.inp.aimPosition.y += 1.4f;
+    }
+
+    public void EquipWeapon(RuntimeWeapon rw)
+    {
+        Weapon w = rw.w_actual;
+        lh_target = rw.w_hook.leftHandIK;
+
+        rh_target.localPosition = w.m_h_ik.pos;
+        rh_target.localEulerAngles = w.m_h_ik.rot;
+        onIdleDisableOh = rw.w_actual.onIdleDisableOh;
+        curWeapon = rw;
     }
 
     private void OnAnimatorMove()
@@ -110,7 +123,12 @@ public class AnimatorHook : MonoBehaviour
         if (angle > 45)
             t_m_weight = 0;
 
-        Debug.Log(t_l_weight + " | " + t_m_weight);
+        if (!statesManager.states.isAiming)
+        {
+            if (onIdleDisableOh)
+                o_h_weight = 0;
+        }
+
         l_weight = Mathf.Lerp(l_weight, t_l_weight, statesManager.delta * 3);
         m_h_weight = Mathf.Lerp(m_h_weight, t_m_weight, statesManager.delta * 9);
     }
@@ -171,8 +189,8 @@ public class AnimatorHook : MonoBehaviour
                 recoilIsInit = false;
             }
 
-            offsetPosition = Vector3.forward;
-            offsetRotation = Vector3.right * 90;
+            offsetPosition = Vector3.forward * curWeapon.w_actual.recoilZ.Evaluate(recoilT);
+            offsetRotation = Vector3.right * 90 * curWeapon.w_actual.recoilY.Evaluate(recoilT);
 
             rh_target.localPosition = basePosition + offsetPosition;
             rh_target.localEulerAngles = baseRotation + offsetRotation;

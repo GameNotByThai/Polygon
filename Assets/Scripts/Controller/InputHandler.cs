@@ -88,13 +88,13 @@ public class InputHandler : MonoBehaviour
     void GetInput_Update()
     {
         aimInput = Input.GetMouseButton(1);
-        //crouchInput = Input.GetKey(KeyCode.LeftControl);
+        crouchInput = Input.GetKey(KeyCode.C);
     }
 
     void InGame_UpdateStates_Update()
     {
         statesManager.states.isAiming = aimInput;
-        //statesManager.states.isCrouching = crouchInput;
+        statesManager.states.isCrouching = crouchInput;
     }
 
     void AimPosition()

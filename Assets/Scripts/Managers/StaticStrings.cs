@@ -12,4 +12,5 @@ public static class StaticStrings
     public static string aiming = "aiming";
     public static string sprint = "sprint";
     public static string crouch = "crouch";
+    public static string weaponType = "weaponIdle";
 }

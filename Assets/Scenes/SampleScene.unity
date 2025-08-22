@@ -217,7 +217,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   statesManager: {fileID: 842357885}
   camHolder: {fileID: 1754790944}
-  debugAiming: 1
+  debugAiming: 0
 --- !u!4 &497881313
 Transform:
   m_ObjectHideFlags: 0
@@ -374,6 +374,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cedc093a491f02646bb09f8f5e2982c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  resourcesManager: {fileID: 11400000, guid: cab14041c450e9a49907f644714ca54e, type: 2}
   stats: {fileID: 11400000, guid: b4c138e89ae03144f98e7e1ce529a319, type: 2}
   states:
     onGround: 0
@@ -388,6 +389,21 @@ MonoBehaviour:
     moveDirection: {x: 0, y: 0, z: 0}
     aimPosition: {x: 0, y: 0, z: 0}
     rotateDirection: {x: 0, y: 0, z: 0}
+  weaponManager:
+    mainWeaponId: 1911
+    secWeaponId: 
+    m_weapon:
+      curAmmo: 0
+      curCarrying: 0
+      m_instance: {fileID: 0}
+      w_hook: {fileID: 0}
+      w_actual: {fileID: 0}
+    s_weapon:
+      curAmmo: 0
+      curCarrying: 0
+      m_instance: {fileID: 0}
+      w_hook: {fileID: 0}
+      w_actual: {fileID: 0}
   anim: {fileID: 4589382871353495494}
   activeModel: {fileID: 4589382871362951836}
   a_hook: {fileID: 0}
@@ -3258,6 +3274,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   lh_target: {fileID: 0}
+  onIdleDisableOh: 0
   disable_o_h: 0
   disable_m_h: 0
 --- !u!4 &4589382871363263548
