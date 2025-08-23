@@ -15,4 +15,8 @@ MonoBehaviour:
   curAmmo: {fileID: 11400000, guid: 4df406cee42e7b54bb61d269ac05e7b4, type: 2}
   curCarrying: {fileID: 11400000, guid: 22b897c68fcc17d4c913b0d308ab8f3d, type: 2}
   health: {fileID: 11400000, guid: fd2444e2b8729934494c62b3eb2017f1, type: 2}
+  isAming: {fileID: 11400000, guid: 645e765fa69449c43afcc70a754aaee4, type: 2}
+  isLeftPivot: {fileID: 11400000, guid: 83f496661fadcbd4aa88eb5b5b6d6e07, type: 2}
+  isCrouching: {fileID: 11400000, guid: 4f1ea42a229784f429e16825e5058fd5, type: 2}
   targetSpread: {fileID: 11400000, guid: ca31f4890df4cde4db6c9c9f9b0d4361, type: 2}
+  e_UpdateUI: {fileID: 11400000, guid: 2205f2ecbeb3f0f4b91af93beb2a0ee6, type: 2}

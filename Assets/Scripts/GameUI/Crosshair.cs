@@ -6,6 +6,7 @@ public class Crosshair : UIElement
 {
     public FloatVariable targetSpread;
     public float maxSpread = 80;
+    public float defaultSpread;
     public float spreadSpeed = 5;
     public Parts[] parts;
 
@@ -15,14 +16,23 @@ public class Crosshair : UIElement
     public override void Tick(float dt)
     {
         t = dt * spreadSpeed;
+        if (targetSpread.value > maxSpread) 
+            targetSpread.value = maxSpread;
+
         curSpread = Mathf.Lerp(curSpread, targetSpread.value, t);
         for (int i = 0; i < parts.Length; i++)
         {
             Parts p = parts[i];
             p.trans.anchoredPosition = p.pos * curSpread;
         }
+
+        targetSpread.value = Mathf.Lerp(targetSpread.value, defaultSpread, dt);
     }
 
+    public void AddSpread(float v)
+    {
+        targetSpread.value = v;
+    }
 
     [System.Serializable]
     public class Parts

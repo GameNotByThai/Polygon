@@ -8,13 +8,15 @@ public class CameraHandler : MonoBehaviour
     public Transform target;
     public Transform pivot;
     public Transform mTransform;
-    public bool leftPivot;
+    public BoolVariable isLeftPivot;
+    public BoolVariable isAming;
+    public BoolVariable isCrouching;
     float delta;
 
-    public float mouseX;
-    public float mouseY;
-    public float smoothX;
-    public float smoothY;
+    float mouseX;
+    float mouseY;
+    float smoothX;
+    float smoothY;
     float smoothXvelocity;
     float smoothYvelocity;
     float lookAngle;
@@ -22,14 +24,15 @@ public class CameraHandler : MonoBehaviour
 
     public CameraValues values;
 
-    StatesManager statesManager;
-
     public void Init(InputHandler inp)
     {
         mTransform = transform;
-        statesManager = inp.statesManager;
-        target = statesManager.mTransfrom;
+        target = inp.statesManager.mTransfrom;
+    }
 
+    private void FixedUpdate()
+    {
+        FixedTick(Time.fixedDeltaTime);
     }
 
     public void FixedTick(float dt)
@@ -42,7 +45,7 @@ public class CameraHandler : MonoBehaviour
         HandleRotation();
 
         float speed = values.moveSpeed;
-        if (statesManager.states.isAiming)
+        if (isAming.value)
             speed = values.aimSpeed;
 
         Vector3 targetPosition = Vector3.Lerp(mTransform.position, target.position, delta * speed);
@@ -55,16 +58,16 @@ public class CameraHandler : MonoBehaviour
         float targetY = values.normalY;
         float targetZ = values.normalZ;
 
-        if (statesManager.states.isCrouching)
+        if (isCrouching.value)
             targetY = values.crouchY;
 
-        if (statesManager.states.isAiming)
+        if (isAming.value)
         {
             targetX = values.aimX;
             targetZ = values.aimZ;
         }
 
-        if (leftPivot)
+        if (isLeftPivot.value)
             targetX = -targetX;
 
         Vector3 newPivotPosition = pivot.localPosition;

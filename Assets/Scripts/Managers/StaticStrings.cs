@@ -6,6 +6,8 @@ public static class StaticStrings
 {
     public static string Horizontal = "Horizontal";
     public static string Vertical = "Vertical";
+    public static string Pivot = "Pivot";
+    public static string Reload = "Reload";
 
     public static string vertical = "vertical";
     public static string horizontal = "horizontal";

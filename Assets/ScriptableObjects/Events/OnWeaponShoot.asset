@@ -9,7 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4c8dcf0805b7c340be55e463df6a2b4, type: 3}
-  m_Name: curAmmo
+  m_Script: {fileID: 11500000, guid: 30b3a09c336c6d847930e9a0afc1976b, type: 3}
+  m_Name: OnWeaponShoot
   m_EditorClassIdentifier: 
-  value: 0

@@ -22,8 +22,6 @@ public class AnimatorHook : MonoBehaviour
     public bool disable_o_h;
     public bool disable_m_h;
 
-    RuntimeWeapon curWeapon;
-
     public void Init(StatesManager st)
     {
         statesManager = st;
@@ -47,8 +45,9 @@ public class AnimatorHook : MonoBehaviour
 
         rh_target.localPosition = w.m_h_ik.pos;
         rh_target.localEulerAngles = w.m_h_ik.rot;
+        basePosition = w.m_h_ik.pos;
+        baseRotation = w.m_h_ik.rot;
         onIdleDisableOh = rw.w_actual.onIdleDisableOh;
-        curWeapon = rw;
     }
 
     private void OnAnimatorMove()
@@ -175,7 +174,6 @@ public class AnimatorHook : MonoBehaviour
             recoilIsInit = true;
         recoilT = 0;
         offsetPosition= Vector3.zero;
-
     }
 
     public void RecoilActual()
@@ -189,8 +187,8 @@ public class AnimatorHook : MonoBehaviour
                 recoilIsInit = false;
             }
 
-            offsetPosition = Vector3.forward * curWeapon.w_actual.recoilZ.Evaluate(recoilT);
-            offsetRotation = Vector3.right * 90 * curWeapon.w_actual.recoilY.Evaluate(recoilT);
+            offsetPosition = Vector3.forward * statesManager.weaponManager.GetCurrent().w_actual.recoilZ.Evaluate(recoilT);
+            offsetRotation = Vector3.right * 90 * -statesManager.weaponManager.GetCurrent().w_actual.recoilY.Evaluate(recoilT);
 
             rh_target.localPosition = basePosition + offsetPosition;
             rh_target.localEulerAngles = baseRotation + offsetRotation;

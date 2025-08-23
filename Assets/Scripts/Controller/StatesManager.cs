@@ -191,6 +191,8 @@ public class StatesManager : MonoBehaviour
     #endregion
 
     #region Update
+
+    float rT;
     public void Tick(float dt)
     {
         delta = dt;
@@ -199,6 +201,17 @@ public class StatesManager : MonoBehaviour
             case CharState.normal:
                 states.onGround = OnGround();
                 HandleAnimationsAll();
+                a_hook.Tick(dt);
+
+                if (states.isInteracting)
+                {
+                    rT += delta;
+                    if (rT > 2)
+                    {
+                        states.isInteracting = false;
+                        rT = 0;
+                    }
+                }
                 break;
             case CharState.onAir:
                 states.onGround = OnGround();
@@ -282,8 +295,52 @@ public class StatesManager : MonoBehaviour
     {
         rw.m_instance.SetActive(true);
         a_hook.EquipWeapon(rw);
-        Debug.Log(rw.w_actual.weaponType);
         anim.SetFloat(StaticStrings.weaponType, rw.w_actual.weaponType);
+        weaponManager.SetCurrent(rw);
+    }
+
+    public bool ShootWeapon(float t)
+    {
+        bool retVal = false;
+
+        RuntimeWeapon c = weaponManager.GetCurrent();
+        
+        if (c.curAmmo > 0)
+        {
+            if (t - c.lastFired > c.w_actual.fireRate)
+            {
+                c.lastFired = t;
+                retVal = true;
+                c.ShootWeapon();
+                a_hook.RecoilAnim();
+            }
+        }
+
+        return retVal;
+    }
+
+    public bool Reload()
+    {
+        bool retVal = false;
+        RuntimeWeapon c = weaponManager.GetCurrent();
+        if (c.curAmmo < c.w_actual.magazineAmmo)
+        {
+            if (c.w_actual.magazineAmmo <= c.curCarrying)
+            {
+                c.curAmmo = c.w_actual.magazineAmmo;
+                c.curCarrying -= c.curAmmo;
+            }
+            else
+            {
+                c.curAmmo = c.curCarrying;
+                c.curCarrying = 0;
+            }
+            retVal = true;
+            anim.CrossFade("Rifle Reload", 0.2f);
+            states.isInteracting = true;
+        }
+
+        return retVal;
     }
 
     #endregion
