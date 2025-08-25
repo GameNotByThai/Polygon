@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f8650ce96df681408103445c8c42161, type: 3}
   m_Name: matchMakingDescription
   m_EditorClassIdentifier: 
-  value: Select A Jog
+  value: Select A Job
