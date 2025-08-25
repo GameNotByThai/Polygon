@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class InputHandler : MonoBehaviour
@@ -31,6 +29,7 @@ public class InputHandler : MonoBehaviour
 
     public void InitGame()
     {
+        p_references.Init();
         statesManager.Init();
         camHolder.Init(this);
 
@@ -45,7 +44,7 @@ public class InputHandler : MonoBehaviour
     {
         if (!isInit) return;
 
-        delta = Time.fixedDeltaTime;    
+        delta = Time.fixedDeltaTime;
         GetInput_FixedUpdate();
         InGame_UpdateStates_FixedUpdate();
         statesManager.FixedTick(delta);
@@ -73,7 +72,7 @@ public class InputHandler : MonoBehaviour
         moveDir.Normalize();
         statesManager.inp.moveDirection = moveDir;
 
-        statesManager.inp.rotateDirection = camHolder.mTransform.forward;  
+        statesManager.inp.rotateDirection = camHolder.mTransform.forward;
     }
     #endregion
 
@@ -89,8 +88,8 @@ public class InputHandler : MonoBehaviour
         AimPosition();
         InGame_UpdateStates_Update();
 
-        if (debugAiming) 
-            statesManager.states.isAiming = true;  
+        if (debugAiming)
+            statesManager.states.isAiming = true;
 
         statesManager.Tick(delta);
 
@@ -124,7 +123,7 @@ public class InputHandler : MonoBehaviour
         }
 
         statesManager.states.isAiming = aimInput;
-        
+
         if (shootInput)
         {
             statesManager.states.isAiming = true;

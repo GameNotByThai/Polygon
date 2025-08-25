@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -19,4 +17,15 @@ public class PlayerReferences : ScriptableObject
     [Header("UI")]
     public FloatVariable targetSpread;
     public GameEvent e_UpdateUI;
+
+    public void Init()
+    {
+        curAmmo.value = 0;
+        curCarrying.value = 0;
+        health.value = 100;
+        isAming.value = false;
+        isLeftPivot.value = false;
+        isCrouching.value = false;
+        targetSpread.value = 30;
+    }
 }
